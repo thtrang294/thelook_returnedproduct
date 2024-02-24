@@ -106,8 +106,9 @@ UPDATE order_items SET ship_time = EXTRACT(EPOCH FROM (delivered_at - shipped_at
 ```
 Understanding the impact of distance on customer satisfaction is also important in minimizing product returns. Therefore, additional columns will be created in the order_items table to include data related to distance. Before delving into this, let's outline the process of preparing and shipping products to customers. The dataset reveals that even if an order contains items from different distribution centers, they all share the same timestamp for being shipped and delivered. This suggests that they are consolidated at one distribution center before being shipped to the customer. For optimal efficiency, this consolidation occurs at the distribution center closest to the customer. 
 <br><br>Please refer to the diagram below for a clearer visualization of this process.
-<br><br><img width="459" alt="image" src="https://github.com/thtrang294/thelook_returnedproduct/assets/150567547/99746bfc-b74e-4dde-8b36-e596d17def01">
-<br><br>So we need to calculate 2 kind of distance:
+<br><br><p align="center"><img width="459" alt="image" src="https://github.com/thtrang294/thelook_returnedproduct/assets/150567547/99746bfc-b74e-4dde-8b36-e596d17def01">
+
+<br>So we need to calculate 2 kind of distance:
 - Distance from the start distribution center to the end distribution center (or s2e_distance)
 - Distance from the end distribution center to the customer (or e2c_distance)
 ```sql
@@ -216,14 +217,38 @@ ON oi.user_id = u.id;
 The prep_time column contains negative values, with even its 25th quartile being negative. Moreover, the ship_time column includes zero values, suggesting that some products were shipped before the order was created or that delivery took no time at all. These inconsistencies raise concerns about the reliability of the time data for analysis purposes. Therefore, we have decided not to conduct any analysis related to the time data.
 <br><br> And now the data is fully ready for analysis! Let's dive in!
 ### Data Analysis
-The donut chart highlights that 28% of products are returned, indicating that for every 4 products ordered, 1 is returned.
+<br><p align="center">![image](https://github.com/thtrang294/thelook_returnedproduct/assets/150567547/e09d8d4a-1dc8-40f3-a1a2-3d485cd07135)
 
-<br>Regarding age groups, there isn't a significant difference in the number of returned products across different age demographics.
+<br>The donut chart highlights that 28% of products are returned, indicating that for every 4 products ordered, 1 is returned.
+<br><br><p align="center"> ![image](https://github.com/thtrang294/thelook_returnedproduct/assets/150567547/32fa288a-d2dc-45db-92aa-49e43362aa62)
+<br><p align="center"> _Filter only complete orders_
+<br><p align="center">![image](https://github.com/thtrang294/thelook_returnedproduct/assets/150567547/180acb2c-f286-4530-a577-732fd14c2aa9)
+<br><p align="center"> _Filter only returned orders_
 
-<br>However, when looking at product categories, we observe that the top 5 categories with the highest return rates are jumpsuits & rompers, underwear, plus, pants, shorts and leggings. This suggests that our marketing efforts should prioritize addressing issues within these categories first.
+<br> When examining traffic sources and age demographics, there isn't a significant difference in how complete and returned orders are distributed. This suggests that factors such as where customers come from and their age don't have a substantial impact on whether an order is completed or returned.
 
-<br><br>While we currently lack specific information on why customers return products, further research such as customer surveys could provide valuable insights. Some potential actions to reduce returns include enhancing user understanding, improving clarity in size measurements, providing more sample pictures, and offering detailed measurement guidelines. These actions can help us better meet customer expectations and reduce return rates over time.
+<br><p align="center"><img width="661" alt="image" src="https://github.com/thtrang294/thelook_returnedproduct/assets/150567547/49710265-d627-43ae-b9d1-59d609aa9b50">
 
-<br><br> The analysis of the distance between starting and ending distribution centers reveals notable efficiency in Memphis and Chicago. These centers, which also rank highly in terms of the number of product orders, exhibit a tight spread of distances. This suggests that they are strategically located close to other distribution centers with necessary products, resulting in minimized delivery costs.
+<br> However, when looking at product categories, we observe that the top 5 categories with the highest return rates are jumpsuits & rompers, underwear, plus, pants and shorts. This suggests that our marketing efforts should prioritize addressing issues within these categories first.
 
-<br><br> Conversely, Los Angeles, despite ranking fifth in product orders, has the highest median distance. Similarly, Houston, ranking fourth, also exhibits a high median and spread of distances, second only to Los Angeles. This indicates that the products available in the Los Angeles and Houston distribution centers may not fully cater to customer needs. Furthermore, the distance between these centers and others with required products is considerably far. To address these inefficiencies, it is recommended that additional distribution centers be established in proximity to Los Angeles and Houston. This would facilitate more efficient delivery of products to customers in these regions, ultimately enhancing customer satisfaction and reducing delivery costs.
+<br> While we currently lack specific information on why customers return products, further research such as customer surveys could provide valuable insights. Some potential actions to reduce returns include enhancing user understanding, improving clarity in size measurements, providing more sample pictures, and offering detailed measurement guidelines. These actions can help us better meet customer expectations and reduce return rates over time.
+
+<br><p align="center">![image](https://github.com/thtrang294/thelook_returnedproduct/assets/150567547/ce9c90a1-f6bd-42fe-89b2-5a854ca147fa)
+<br> _Filter only complete orders_
+<br><p align="center">![image](https://github.com/thtrang294/thelook_returnedproduct/assets/150567547/1442b757-48c2-4ea9-a283-992746fa8757)
+<br> _Filter only returned orders_
+
+<br> The geo plot shows that the majority of orders are concentrated in the Eastern region. In contrast, for the Western region, Los Angeles emerges as the sole city receiving significant numbers of orders.  There is no discernible difference in how complete and returned orders are distributed across different US states.
+
+<br><p align="center"> ![image](https://github.com/thtrang294/thelook_returnedproduct/assets/150567547/7ea52495-c78b-47e2-9cd4-7d25ff67ae7f)
+
+<br> The analysis of the distance between starting and ending distribution centers reveals notable efficiency in Memphis and Chicago. These centers, which also rank highly in terms of the number of product orders, exhibit a tight spread of distances. This suggests that they are strategically located close to other distribution centers with necessary products, resulting in minimized delivery costs.
+
+<br> Conversely, Los Angeles, despite ranking fifth in product orders, has the highest median distance. Similarly, Houston, ranking fourth, also exhibits a high median and spread of distances, second only to Los Angeles. This indicates that the products available in the Los Angeles and Houston distribution centers may not fully cater to customer needs. Furthermore, the distance between these centers and others with required products is considerably far. To address these inefficiencies, it is recommended that additional distribution centers be established in proximity to Los Angeles and Houston. This would facilitate more efficient delivery of products to customers in these regions, ultimately enhancing customer satisfaction and reducing delivery costs.
+
+<br><p align="center"><img width="585" alt="image" src="https://github.com/thtrang294/thelook_returnedproduct/assets/150567547/e6b55c5b-b7c3-4365-9b0a-151405715931">
+
+<br> The analysis of the distance between ending distribution centers and customers reveals generally shorter distances compared to those between starting and ending distribution centers. This indicates that the current distribution centers are operating effectively in fulfilling customer needs.
+
+<br> Interestingly, despite having the highest median distance from starting to ending distribution centers, Los Angeles boasts the lowest median distance from ending distribution centers to customers. This underscores the significance of Los Angeles as a pivotal center for the Western region, emphasizing the need for heightened focus and strategic initiatives in this area.
+# 3. Conclusion
